@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Створити вкладку</title>
+</head>
+<body>
+    <h1>Додати нову вкладку</h1>
+    <div>
+        <input type="text" id="tab-name" placeholder="Введіть назву вкладки">
+        <button onclick="createTab()">Додати вкладку</button>
+        <a href="index2.html">index2</a>
+    </div>
+    <div id="message"></div>
+
+    <script>
+        // Додавання нової вкладки
+        async function createTab() {
+            const tabName = document.getElementById('tab-name').value;
+            if (!tabName) {
+                alert('Введіть назву вкладки!');
+                return;
+            }
+
+            const newTab = { name: tabName };
+
+            // Відправка нової вкладки на сервер
+            const response = await fetch('/tabs', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newTab)
+            });
+
+            if (response.ok) {
+                document.getElementById('message').innerHTML = 'Вкладка успішно додана!';
+            } else {
+                document.getElementById('message').innerHTML = 'Помилка при додаванні вкладки!';
+            }
+        }
+    </script>
+</body>
+</html>
